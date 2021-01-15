@@ -10,6 +10,8 @@
 		1F5940E7A00AD60BC31F29CE /* Pods_chatapp_chatappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D7E26EA0800F1F002EC1420 /* Pods_chatapp_chatappUITests.framework */; };
 		4F11CCB925A2B697004E3961 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11CCB825A2B697004E3961 /* Extentions.swift */; };
 		4F11CCD325A3F784004E3961 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F11CCD225A3F784004E3961 /* GoogleService-Info.plist */; };
+		4F11CCD825A559FA004E3961 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11CCD725A559FA004E3961 /* DatabaseManager.swift */; };
+		4F11CCF825B20C27004E3961 /* OAuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11CCF725B20C27004E3961 /* OAuthHelper.swift */; };
 		4F3B9EB025A29E4C00D118C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3B9EAF25A29E4C00D118C7 /* AppDelegate.swift */; };
 		4F3B9EB225A29E4C00D118C7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3B9EB125A29E4C00D118C7 /* SceneDelegate.swift */; };
 		4F3B9EB425A29E4C00D118C7 /* ConverstaionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3B9EB325A29E4C00D118C7 /* ConverstaionsViewController.swift */; };
@@ -52,6 +54,9 @@
 		3D7E26EA0800F1F002EC1420 /* Pods_chatapp_chatappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_chatapp_chatappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F11CCB825A2B697004E3961 /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		4F11CCD225A3F784004E3961 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4F11CCD725A559FA004E3961 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		4F11CCF325B09DB4004E3961 /* chatapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = chatapp.entitlements; sourceTree = "<group>"; };
+		4F11CCF725B20C27004E3961 /* OAuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthHelper.swift; sourceTree = "<group>"; };
 		4F3B9EAC25A29E4C00D118C7 /* chatapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chatapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F3B9EAF25A29E4C00D118C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F3B9EB125A29E4C00D118C7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +139,7 @@
 		4F3B9EAE25A29E4C00D118C7 /* chatapp */ = {
 			isa = PBXGroup;
 			children = (
+				4F11CCF325B09DB4004E3961 /* chatapp.entitlements */,
 				4F11CCD225A3F784004E3961 /* GoogleService-Info.plist */,
 				4F3B9EE825A29F2500D118C7 /* Resources */,
 				4F3B9EE725A29F1900D118C7 /* ViewModels */,
@@ -198,6 +204,8 @@
 				4F3B9EAF25A29E4C00D118C7 /* AppDelegate.swift */,
 				4F3B9EB125A29E4C00D118C7 /* SceneDelegate.swift */,
 				4F11CCB825A2B697004E3961 /* Extentions.swift */,
+				4F11CCD725A559FA004E3961 /* DatabaseManager.swift */,
+				4F11CCF725B20C27004E3961 /* OAuthHelper.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -490,7 +498,9 @@
 				4F3B9EFB25A2A09300D118C7 /* PhotoViewerViewController.swift in Sources */,
 				4F3B9EF625A2A07400D118C7 /* RegisterViewController.swift in Sources */,
 				4F3B9F0025A2A0A000D118C7 /* VideoPlayerViewController.swift in Sources */,
+				4F11CCD825A559FA004E3961 /* DatabaseManager.swift in Sources */,
 				4F3B9F0625A2A0BB00D118C7 /* NewConversationViewController.swift in Sources */,
+				4F11CCF825B20C27004E3961 /* OAuthHelper.swift in Sources */,
 				4F3B9EF125A2A06600D118C7 /* LoginViewController.swift in Sources */,
 				4F3B9EB225A29E4C00D118C7 /* SceneDelegate.swift in Sources */,
 			);
@@ -669,6 +679,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = chatapp/chatapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PHFDP4SB5Y;
 				INFOPLIST_FILE = chatapp/Info.plist;
@@ -690,6 +701,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = chatapp/chatapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PHFDP4SB5Y;
 				INFOPLIST_FILE = chatapp/Info.plist;

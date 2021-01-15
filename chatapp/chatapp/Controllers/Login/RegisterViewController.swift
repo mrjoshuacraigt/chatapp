@@ -13,7 +13,7 @@ class RegisterViewController: UIViewController {
 
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName:"person")
+        imageView.image = UIImage(systemName:"person.circle")
         imageView.tintColor = .gray
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
@@ -231,20 +231,33 @@ class RegisterViewController: UIViewController {
         }
         
         //Firebase login
-        
-        FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: { authresults, error in
-            guard let result = authresults, error == nil else {
+        DatabaseManager.shared.doesEmailExist(with: email, completion: {[weak self] exist in
+            guard let strongSelf = self else {
+                return
+            }
+            guard !exist else {
                 print("Error Creating user...")
-                SCLAlertView().showError("Error", subTitle: "Error when creating new user")
+                SCLAlertView().showError("Error", subTitle: "Email already in use")
                 return
             }
             
-            let user = result.user
-            print("User created...\(user)")
-            
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {  authresults, error in
+                
+                guard authresults != nil, error == nil else {
+                    print("Error Creating user...")
+                    SCLAlertView().showError("Error", subTitle: "Error when creating new user")
+                    return
+                }
+                
+                DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName,
+                                                                    lastName: lastName,
+                                                                    emailName: email))
+                
+                strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+                
+
+            })
         })
-        
-        
     }
     
     func alertUserRegistorError(){

@@ -11,6 +11,10 @@ target 'chatapp' do
   pod 'Firebase/Database'
   pod 'SCLAlertView'
 
+  # Facebook
+  pod 'FBSDKLoginKit'
+    
+
   target 'chatappTests' do
     inherit! :search_paths
     # Pods for testing
