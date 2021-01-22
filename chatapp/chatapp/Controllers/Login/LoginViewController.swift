@@ -10,6 +10,7 @@ import SCLAlertView
 import UIKit
 import FBSDKLoginKit
 import AuthenticationServices
+import GoogleSignIn
 
 class LoginViewController: UIViewController {
     
@@ -72,7 +73,8 @@ class LoginViewController: UIViewController {
     
     private let facebookLoginButton: FBLoginButton = {
         let button = FBLoginButton()
-        button.permissions = ["email, public_profile"]
+        button.permissions = ["email,public_profile"]
+        button.layer.cornerRadius = 12
         return button
     }()
     
@@ -81,21 +83,47 @@ class LoginViewController: UIViewController {
         return authorizationButton
     }()
     
+    private let googleLoginButton: GIDSignInButton = {
+       let button = GIDSignInButton()
+        button.layer.cornerRadius = 12
+        return button
+    }()
+    
     // Unhashed nonce.
     fileprivate var currentNonce: String?
+    
+    private var loginObserver: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Log In"
         view.backgroundColor = .white
         
+        loginObserver = NotificationCenter.default.addObserver(forName: Notification.Name.didLoginNotification,
+                                                               object: nil,
+                                                               queue: .main, using: { [weak self] _ in
+                                                                
+                                                                guard let strongSelf = self else {
+                                                                    return
+                                                                }
+                                                                
+                                                                strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+                                                                
+                                                               })
+        
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register",
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(didTapRegister))
         
+        
+        
         loginButton.addTarget(self, action: #selector(loginButtonTapped),
                               for: .touchUpInside)
+        
+        appleLoginButton.addTarget(self, action: #selector(startSignInWithAppleFlow), for: .touchUpInside)
         
         emailField.delegate = self
         passwordField.delegate = self
@@ -108,6 +136,7 @@ class LoginViewController: UIViewController {
         scrollView.addSubview(passwordField)
         scrollView.addSubview(loginButton)
         scrollView.addSubview(facebookLoginButton)
+        scrollView.addSubview(googleLoginButton)
         scrollView.addSubview(appleLoginButton)
         
     }
@@ -142,17 +171,24 @@ class LoginViewController: UIViewController {
                                            width: scrollView.width - 60,
                                            height: 52)
         
-        facebookLoginButton.center = scrollView.center
-        facebookLoginButton.frame.origin.y = loginButton.bottom + 20
         
-        appleLoginButton.frame = CGRect(x:30,
+        googleLoginButton.frame = CGRect(x:30,
                                         y:facebookLoginButton.bottom + 20,
                                         width: scrollView.width - 60,
                                         height: 52)
         
-        appleLoginButton.center = scrollView.center
-        appleLoginButton.frame.origin.y = facebookLoginButton.bottom + 20
-        appleLoginButton.addTarget(self, action: #selector(startSignInWithAppleFlow), for: .touchUpInside)
+        
+        appleLoginButton.frame = CGRect(x:30,
+                                        y:googleLoginButton.bottom + 20,
+                                        width: scrollView.width - 60,
+                                        height: 52)
+        
+    }
+    
+    deinit {
+        if let observer = loginObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
     
     @objc private func loginButtonTapped() {

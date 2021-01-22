@@ -13,6 +13,9 @@ target 'chatapp' do
 
   # Facebook
   pod 'FBSDKLoginKit'
+
+  # Google
+  pod 'GoogleSignIn'
     
 
   target 'chatappTests' do
